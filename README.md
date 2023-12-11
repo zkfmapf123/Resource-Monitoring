@@ -2,7 +2,7 @@
 
 ## Architecture
 
-[i-want](./public/i-want.png)
+![i-want](./public/i-want.png)
 
 - [ ] Fluentbit으로 어디까지 가능한가?
 
