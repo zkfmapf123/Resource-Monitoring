@@ -1,0 +1,82 @@
+version: "3.8"
+services:
+  ## nginx
+  nginx:
+    image: nginx:latest
+    ports:
+    - "80:80"
+    volumes:
+    - ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf
+    - shared-data:/var/log/nginx
+    networks:
+    - node-fb
+  ## node-service-1
+  node-1:
+    build:
+      context: ./express-template
+      dockerfile: Dockerfile
+    ports:
+    - "3001:3001"
+    volumes:
+    - shared-data:/usr/src/app/logs
+    environment:
+    - LABEL=1
+    - NODE_ENV=dev
+    - PORT=3001
+    networks:
+    - node-fb
+  ## node-service-2
+  node-2:
+    build:
+      context: ./express-template
+      dockerfile: Dockerfile
+    ports:
+    - "3002:3002"
+    volumes:
+    - shared-data:/usr/src/app/logs
+    environment:
+    - LABEL=2
+    - NODE_ENV=dev
+    - PORT=3002
+    networks:
+    - node-fb
+  ## node-service-3
+  node-3:
+    build:
+      context: ./express-template
+      dockerfile: Dockerfile
+    ports:
+    - "3003:3003"
+    volumes:
+    - shared-data:/usr/src/app/logs
+    environment:
+    - LABEL=3
+    - NODE_ENV=dev
+    - PORT=3003
+    networks:
+    - node-fb
+  fluentbit:
+    image: fluent/fluent-bit:latest
+    ports:
+    - "24224:24224"
+    volumes:
+    - ./fluentbit-conf/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+    - shared-data:/logs
+    depends_on:
+    - node-1
+    - node-2
+    - node-3
+    - nginx
+    networks:
+    - node-fb
+
+## volume
+volumes:
+  shared-data:
+
+## network
+networks:
+  node-fb:
+    driver: bridge
+
+
