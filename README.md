@@ -4,7 +4,7 @@
 
 ![i-want](./public/i-want.png)
 
-- [ ] Fluentbit으로 어디까지 가능한가?
+- [ ] Fluentbit으 로 어디까지 가능한가?
 
   - [x] output logging (attach)
   - [x] output file log (attach)

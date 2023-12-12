@@ -1,1 +1,10 @@
+## INFRA
+.terraform
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+
+
+## ETC
 logs
+
